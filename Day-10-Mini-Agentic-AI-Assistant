@@ -1,0 +1,56 @@
+import math
+import time
+
+# Tool: Calculator
+def calculate(expression):
+    try:
+        result = eval(expression)
+        return f"Calculated Result: {result}"
+    except Exception as e:
+        return f"Error: {e}"
+
+# Tool: Memory (stores last answers)
+memory = {}
+
+# Tool: Simulated Web Search
+def web_search(query):
+    fake_results = {
+        "who is elon musk": "Elon Musk is the CEO of Tesla and SpaceX.",
+        "what is ai": "AI stands for Artificial Intelligence, the simulation of human intelligence by machines.",
+    }
+    return fake_results.get(query.lower(), "No result found. I'm still learning!")
+
+# Main Agent Function
+def agentic_ai(task):
+    print(f"\n🤖 AI Agent Received Task: {task}")
+    
+    if any(x in task for x in ["calculate", "math", "solve", "add", "multiply"]):
+        expression = input("🔢 Enter math expression (e.g., 2+2*5): ")
+        response = calculate(expression)
+        memory["last_calc"] = response
+        return response
+
+    elif "search" in task or "google" in task or "who is" in task:
+        query = input("🔍 What do you want to search?: ")
+        response = web_search(query)
+        memory["last_search"] = response
+        return response
+
+    elif "recall" in task or "memory" in task:
+        return f"🧠 Memory: {memory}"
+
+    else:
+        return "I can't complete this task yet. Try 'calculate', 'search', or 'recall'."
+
+# Loop the agent
+def run_agent():
+    print("🤖 Welcome to Agentic AI – Day 10 Project!")
+    while True:
+        task = input("\n💡 What is your task? (type 'exit' to quit): ")
+        if task.lower() == "exit":
+            break
+        result = agentic_ai(task)
+        print(f"✅ Result: {result}")
+        time.sleep(1)
+
+run_agent()
